@@ -1,0 +1,7 @@
+go.work
+
+*.log
+
+*.test
+
+*.out
