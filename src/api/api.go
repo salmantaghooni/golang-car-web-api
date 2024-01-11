@@ -1,12 +1,16 @@
 package api
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/salmantaghooni/golang-car-web-api/src/api/routers"
+	"github.com/salmantaghooni/golang-car-web-api/src/config"
 )
 
 func InitServer() {
+	cfg := config.GetConfig()
 	r := gin.New()
 	r.Use(gin.Logger(), gin.Recovery())
 
@@ -16,6 +20,6 @@ func InitServer() {
 		routers.Health(health)
 	}
 
-	r.Run(":5005")
+	r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
 
 }
