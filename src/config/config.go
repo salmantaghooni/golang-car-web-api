@@ -12,6 +12,10 @@ type Config struct {
 	Server   ServerConfig
 	Postgres PostgresConfig
 	Redis    RedisConfig
+	Cors     Cors
+}
+type Cors struct {
+	AllowOrigins string `default:"*"`
 }
 
 type ServerConfig struct {

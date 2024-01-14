@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	"github.com/salmantaghooni/golang-car-web-api/src/api/helper"
 )
 
 type header struct {
@@ -26,65 +28,69 @@ func NewTesthHandler() *TestHandler {
 }
 
 func (h *TestHandler) Test(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
+
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
 		"resault": "test",
-	})
+	}, true, 0))
+
 }
 
 func (h *TestHandler) Users(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
+
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
 		"resault": "users",
-	})
+	}, true, 0))
 }
 
 func (h *TestHandler) UserByID(c *gin.Context) {
 	id := c.Param("id")
-	c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
 		"type":    "userbyid",
 		"resault": id,
-	})
+	}, true, 0))
 }
 
 func (h *TestHandler) UserByUsername(c *gin.Context) {
 	userName := c.Param("username")
-	c.JSON(http.StatusOK, gin.H{
+
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
 		"type":    "username",
 		"resault": userName,
-	})
+	}, true, 0))
 }
 
 func (h *TestHandler) AccountByID(c *gin.Context) {
 	id := c.Param("id")
-	c.JSON(http.StatusOK, gin.H{
+
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
 		"type":    "account",
 		"resault": id,
-	})
+	}, true, 0))
 }
 
 func (h *TestHandler) AddUser(c *gin.Context) {
-
-	c.JSON(http.StatusOK, gin.H{
-		"resault": "add user",
-	})
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
+		"type": "add user",
+	}, true, 0))
 }
 
 func (h *TestHandler) HeaderBinder(c *gin.Context) {
 	userId := c.GetHeader("UserId")
 
-	c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
 		"resault": "header binder1",
 		"userId":  userId,
-	})
+	}, true, 0))
 }
 
 func (h *TestHandler) HeaderBinder2(c *gin.Context) {
 	header := header{}
 	c.BindHeader(&header)
 
-	c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
 		"resault": "header binder2",
 		"userId":  header,
-	})
+	}, true, 0))
 }
 
 func (h *TestHandler) QueryBinder1(c *gin.Context) {
@@ -92,11 +98,11 @@ func (h *TestHandler) QueryBinder1(c *gin.Context) {
 	id := c.Query("id")
 	name := c.Query("name")
 
-	c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
 		"resault": "QueryBinder1",
 		"userId":  id,
 		"name":    name,
-	})
+	}, true, 0))
 }
 
 func (h *TestHandler) UriBinder1(c *gin.Context) {
@@ -104,11 +110,11 @@ func (h *TestHandler) UriBinder1(c *gin.Context) {
 	id := c.Param("id")
 	name := c.Param("name")
 
-	c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
 		"resault": "UriBinder1s",
 		"userId":  id,
 		"name":    name,
-	})
+	}, true, 0))
 }
 
 func (h *TestHandler) BodyBinder(c *gin.Context) {
@@ -119,9 +125,9 @@ func (h *TestHandler) BodyBinder(c *gin.Context) {
 			"validation": err.Error(),
 		})
 	}
-	c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
 		"resault": "BodyBinder",
-	})
+	}, true, 0))
 }
 
 func (h *TestHandler) FromBinder(c *gin.Context) {
@@ -130,9 +136,9 @@ func (h *TestHandler) FromBinder(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"resault": "BodyBinder",
-	})
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
+		"resault": "FromBinder",
+	}, true, 0))
 }
 
 func (h *TestHandler) FileBinder(c *gin.Context) {
@@ -145,7 +151,9 @@ func (h *TestHandler) FileBinder(c *gin.Context) {
 		})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
+
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
 		"resault": file.Filename,
-	})
+	}, true, 0))
+
 }

@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 
+	"github.com/salmantaghooni/golang-car-web-api/src/api/middlewares"
 	"github.com/salmantaghooni/golang-car-web-api/src/api/routers"
 	"github.com/salmantaghooni/golang-car-web-api/src/api/validations"
 	"github.com/salmantaghooni/golang-car-web-api/src/config"
@@ -22,6 +23,7 @@ func InitServer() {
 	}
 
 	// r.Use(gin.Logger(), gin.Recovery(), middlewares.TestMiddleware(), middlewares.LimitByRequest())
+	r.Use(middlewares.Cors(cfg))
 	r.Use(gin.Logger(), gin.Recovery())
 	api := r.Group("/api")
 	v1 := api.Group("/v1")
