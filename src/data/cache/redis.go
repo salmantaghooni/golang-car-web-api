@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/redis/go-redis"
+	"github.com/go-redis/redis"
 
 	"github.com/salmantaghooni/golang-car-web-api/src/config"
 )
