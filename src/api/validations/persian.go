@@ -1,8 +1,7 @@
 package validations
 
 import (
-	"github.com/go-playground/validator/v10"
-
+	"github.com/go-playground/validator"
 	"github.com/salmantaghooni/golang-car-web-api/src/common"
 )
 

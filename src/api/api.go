@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/go-playground/validator/v10"
+	"github.com/go-playground/validator"
 
 	"github.com/salmantaghooni/golang-car-web-api/src/api/middlewares"
 	"github.com/salmantaghooni/golang-car-web-api/src/api/routers"
@@ -13,18 +13,24 @@ import (
 	"github.com/salmantaghooni/golang-car-web-api/src/config"
 )
 
-func InitServer() {
-	cfg := config.GetConfig()
+func InitServer(cfg *config.Config) {
 	r := gin.New()
+	RegisterValidator()
+	// r.Use(gin.Logger(), gin.Recovery(), middlewares.TestMiddleware(), middlewares.LimitByRequest())
+	r.Use(middlewares.Cors(cfg))
+	r.Use(gin.Logger(), gin.Recovery())
+	RegisterRoutes(r)
+	r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
+}
 
+func RegisterValidator() {
 	val, ok := binding.Validator.Engine().(*validator.Validate)
 	if ok {
 		val.RegisterValidation("mobile", validations.IranianMobileNumberValidator, true)
 	}
+}
 
-	// r.Use(gin.Logger(), gin.Recovery(), middlewares.TestMiddleware(), middlewares.LimitByRequest())
-	r.Use(middlewares.Cors(cfg))
-	r.Use(gin.Logger(), gin.Recovery())
+func RegisterRoutes(r *gin.Engine) {
 	api := r.Group("/api")
 	v1 := api.Group("/v1")
 	{
@@ -39,7 +45,4 @@ func InitServer() {
 		health := v2.Group("/health")
 		routers.Health(health)
 	}
-
-	r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
-
 }
