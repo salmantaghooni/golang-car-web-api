@@ -34,6 +34,8 @@ func InitDb(cfg *config.Config) error {
 
 	log.Println("DB Connection")
 
+	return nil
+
 }
 
 func GetDb() *gorm.DB {
