@@ -30,7 +30,7 @@ redis:
  poolSize: 10
  poolTimeout: 15
  idleCheckFrequency: 500
- passwrd:
+ password:
   includeChars: true
   includeDigits: true
   minLength: 6

@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 
+	// gin-swagger middleware
+
 	"github.com/salmantaghooni/golang-car-web-api/src/api"
 	"github.com/salmantaghooni/golang-car-web-api/src/config"
 	"github.com/salmantaghooni/golang-car-web-api/src/data/cache"
