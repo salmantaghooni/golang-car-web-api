@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: car_sale_db
+      POSTGRES_dB: car_sale_db
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
@@ -36,12 +36,12 @@ services:
   redis:
     image: redis:latest
     container_name: redis_container
-    command: [ "redis-server"]
-    # command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
-    # volumes:
-    #   - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
-    #   - redis:/usr/local/etc/redis.conf
-    #   - redis:/data
+    # command: [ "redis-server"]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - redis:/usr/local/etc/redis.conf
+      - redis:/data
     ports:
       - "6379:6379"
     tty: true

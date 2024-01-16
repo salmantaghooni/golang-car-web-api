@@ -49,6 +49,12 @@ type RedisConfig struct {
 	PoolTimeout        time.Duration
 }
 
+type LoggerConfig struct {
+	FilePath string
+	Encoding string
+	Level    string
+}
+
 func GetConfig() *Config {
 	cfgPath := getConfigPath(os.Getenv("APP_ENV"))
 	v, err := LoadConfig(cfgPath, "yml")
