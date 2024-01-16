@@ -40,7 +40,7 @@ func (l *zapLogger) Init() {
 		Filename:   l.cfg.Logger.FilePath,
 		MaxSize:    1,
 		MaxAge:     5,
-		LocalTome:  true,
+		LocalTime:  true,
 		MaxBackups: 10,
 		Compress:   true,
 	})
