@@ -1,4 +1,122 @@
+definitions:
+  handlers.PersonData:
+    properties:
+      first_name:
+        maxLength: 255
+        minLength: 4
+        type: string
+      last_name:
+        maxLength: 255
+        minLength: 4
+        type: string
+      mobile_number:
+        maxLength: 11
+        minLength: 11
+        type: string
+    required:
+    - first_name
+    - last_name
+    - mobile_number
+    type: object
+  helper.BaseHttpResponse:
+    properties:
+      error: {}
+      result: {}
+      resultCode:
+        type: integer
+      success:
+        type: boolean
+      validationErrors:
+        items:
+          $ref: '#/definitions/validations.ValidationError'
+        type: array
+    type: object
+  validations.ValidationError:
+    properties:
+      message:
+        type: string
+      peroperty:
+        type: string
+      tag:
+        type: string
+      value:
+        type: string
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /v1/health/:
+    get:
+      consumes:
+      - application/json
+      description: Health Check
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+        "400":
+          description: Failed
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+      tags:
+      - health
+  /v1/test/body:
+    post:
+      consumes:
+      - application/json
+      description: BodyBinder
+      parameters:
+      - description: person data
+        in: body
+        name: person
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.PersonData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+        "400":
+          description: Failed
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      tags:
+      - Test
+  /v1/user/{id}:
+    get:
+      consumes:
+      - application/json
+      description: UserByID
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+        "400":
+          description: Failed
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+      tags:
+      - Test
+securityDefinitions:
+  AuthBearer:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

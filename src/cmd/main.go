@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-
 	// gin-swagger middleware
 
 	"github.com/salmantaghooni/golang-car-web-api/src/api"
@@ -11,6 +10,9 @@ import (
 	"github.com/salmantaghooni/golang-car-web-api/src/data/db"
 )
 
+// @securityDefinitions.apiKey AuthBearer
+// @in header
+// @name Authorization
 func main() {
 	cfg := config.GetConfig()
 	err := cache.InitRedis(cfg)

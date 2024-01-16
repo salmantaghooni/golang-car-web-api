@@ -18,13 +18,17 @@ import (
 
 func InitServer(cfg *config.Config) {
 	r := gin.New()
+	RegisterMiddlewares(r, cfg)
 	RegisterValidator()
-	// r.Use(gin.Logger(), gin.Recovery(), middlewares.TestMiddleware(), middlewares.LimitByRequest())
-	r.Use(middlewares.Cors(cfg))
-	r.Use(gin.Logger(), gin.Recovery())
 	RegisterRoutes(r)
 	RegisterSwagger(r, cfg)
 	r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
+}
+
+func RegisterMiddlewares(r *gin.Engine, cfg *config.Config) {
+	// r.Use(gin.Logger(), gin.Recovery(), middlewares.TestMiddleware(), middlewares.LimitByRequest())
+	r.Use(middlewares.Cors(cfg))
+	r.Use(gin.Logger(), gin.Recovery())
 }
 
 func RegisterValidator() {
