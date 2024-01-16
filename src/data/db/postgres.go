@@ -2,16 +2,17 @@ package db
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
 	"github.com/salmantaghooni/golang-car-web-api/src/config"
+	"github.com/salmantaghooni/golang-car-web-api/src/pkg/logging"
 )
 
 var dbClient *gorm.DB
+var logger = logging.NewLogger(config.GetConfig())
 
 func InitDb(cfg *config.Config) error {
 	cnn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s TimeZone=Asia/Tehran",
@@ -32,7 +33,7 @@ func InitDb(cfg *config.Config) error {
 	sqlDb.SetMaxOpenConns(cfg.Postgres.MaxOpenConns)
 	sqlDb.SetConnMaxLifetime(cfg.Postgres.ConnMaxLifetime * time.Minute)
 
-	log.Println("DB Connection")
+	logger.Info(logging.Postgres, logging.Startup, "Connection Done", nil)
 
 	return nil
 
