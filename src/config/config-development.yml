@@ -1,4 +1,6 @@
 server:
+  internalPort: 5005
+  externalPort: 5005
   Port: 5005
   RunMode: debug
 logger:

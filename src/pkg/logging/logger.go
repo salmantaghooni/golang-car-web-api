@@ -1,6 +1,10 @@
 package logging
 
-import "github.com/salmantaghooni/golang-car-web-api/src/config"
+import (
+	"fmt"
+
+	"github.com/salmantaghooni/golang-car-web-api/src/config"
+)
 
 type Logger interface {
 	Init()
@@ -22,6 +26,7 @@ type Logger interface {
 }
 
 func NewLogger(cfg *config.Config) Logger {
+	fmt.Println(cfg.Logger.Logger)
 	if cfg.Logger.Logger == "zap" {
 		return newZapLogger(cfg)
 	} else if cfg.Logger.Logger == "zerolog" {

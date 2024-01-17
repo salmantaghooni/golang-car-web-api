@@ -43,6 +43,8 @@ const (
 	Method       ExtraKey = "Method"
 	StatusCode   ExtraKey = "StatusCode"
 	BodySize     ExtraKey = "BodySize"
+	RequestBody  ExtraKey = "RequestBody"
+	ResponseBody ExtraKey = "ResponseBody"
 	Path         ExtraKey = "Path"
 	Latency      ExtraKey = "Latency"
 	Body         ExtraKey = "Body"

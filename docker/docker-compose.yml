@@ -1,0 +1,148 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_dB: car_sale_db
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - webapi_network
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: salman.taghooni@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 12345
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "8090:80"
+    networks:
+      - webapi_network
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    # command: [ "redis-server"]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - redis:/usr/local/etc/redis.conf
+      - redis:/data
+    ports:
+      - "6379:6379"
+    tty: true
+    networks:
+      - webapi_network
+
+  ####################### SETUP #######################
+  setup:
+    build:
+      context: elk/setup/
+      args:
+        ELASTIC_VERSION: 8.5.3
+    init: true
+    volumes:
+      - ./elk/setup/entrypoint.sh:/entrypoint.sh:ro,Z
+      - ./elk/setup/helpers.sh:/helpers.sh:ro,Z
+      - ./elk/setup/roles:/roles:ro,Z
+      - setup:/state:Z
+    environment:
+      ELASTIC_PASSWORD: aA123456
+      KIBANA_SYSTEM_PASSWORD: aA123456
+      FILEBEAT_INTERNAL_PASSWORD: aA123456
+    networks:
+      - webapi_network
+    depends_on:
+      - elasticsearch
+  
+  ####################### ELK #######################
+  elasticsearch:
+    build:
+      context: elk/elasticsearch/
+      args:
+        ELASTIC_VERSION: 8.5.3
+    container_name: elasticsearch
+    volumes:
+      - ./elk/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - elasticsearch:/usr/share/elasticsearch/data:Z
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      node.name: elasticsearch
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      ELASTIC_PASSWORD: aA123456
+      discovery.type: single-node
+    networks:
+      - webapi_network
+    restart: unless-stopped
+
+  kibana:
+    build:
+      context: elk/kibana/
+      args:
+        ELASTIC_VERSION: 8.5.3
+    volumes:
+      - ./elk/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+      - elasticsearch:/usr/share/kibana/data:Z
+    ports:
+      - 5601:5601
+    environment:
+      KIBANA_SYSTEM_PASSWORD: aA123456
+    networks:
+      - webapi_network
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+
+  filebeat:
+    build:
+      context: elk/filebeat/
+      args:
+        ELASTIC_VERSION: 8.5.3
+    user: root
+    command:
+      - -e
+      - --strict.perms=false
+    volumes:
+      - ./elk/filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ../src/logs:/var/log/filebeat/service:ro
+      #- ../prod/logs:/var/log/filebeat/service:ro
+      - logs:/var/log/filebeat
+      - logs:/app:ro
+ 
+    environment:
+      FILEBEAT_INTERNAL_PASSWORD: aA123456
+      BEATS_SYSTEM_PASSWORD: aA123456
+    networks:
+      - webapi_network
+    depends_on:
+      - elasticsearch
+  
+
+volumes:
+  postgres:
+  pgadmin:
+  redis:
+  logs:
+  setup:
+  elasticsearch:
+
+
+networks:
+  webapi_network:
+    driver: bridge
