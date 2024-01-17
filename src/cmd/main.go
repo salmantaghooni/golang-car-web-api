@@ -7,6 +7,7 @@ import (
 	"github.com/salmantaghooni/golang-car-web-api/src/config"
 	"github.com/salmantaghooni/golang-car-web-api/src/data/cache"
 	"github.com/salmantaghooni/golang-car-web-api/src/data/db"
+	"github.com/salmantaghooni/golang-car-web-api/src/data/db/migrations"
 	"github.com/salmantaghooni/golang-car-web-api/src/pkg/logging"
 )
 
@@ -21,10 +22,12 @@ func main() {
 		logger.Fatal(logging.Redis, logging.Startup, err.Error(), nil)
 	}
 	defer cache.CloseRedis()
+
 	if err := db.InitDb(cfg); err != nil {
 		logger.Fatal(logging.Postgres, logging.Startup, err.Error(), nil)
 	}
 	defer db.CloseDb()
+	migrations.Up_1()
 	api.InitServer(cfg)
 
-}
+} 
