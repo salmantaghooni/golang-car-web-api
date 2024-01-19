@@ -57,6 +57,12 @@ type LoggerConfig struct {
 	Logger   string
 }
 
+type OtpConfig struct {
+	ExpireTime time.Duration
+	Digits     int
+	Limmiter   time.Duration
+}
+
 func GetConfig() *Config {
 	cfgPath := getConfigPath(os.Getenv("APP_ENV"))
 	v, err := LoadConfig(cfgPath, "yml")

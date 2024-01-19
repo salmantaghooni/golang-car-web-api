@@ -132,6 +132,12 @@ services:
       - webapi_network
     depends_on:
       - elasticsearch
+
+
+otp:
+  expireTime: 120
+  digits: 6
+  limitter: 100  
   
 
 volumes:

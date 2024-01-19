@@ -26,8 +26,8 @@ func main() {
 	if err := db.InitDb(cfg); err != nil {
 		logger.Fatal(logging.Postgres, logging.Startup, err.Error(), nil)
 	}
-	defer db.CloseDb()
 	migrations.Up_1()
+	defer db.CloseDb()
 	api.InitServer(cfg)
 
-} 
+}
