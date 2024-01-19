@@ -15,6 +15,7 @@ type Config struct {
 	Redis    RedisConfig
 	Cors     Cors
 	Logger   LoggerConfig
+	OTP      OtpConfig
 }
 type Cors struct {
 	AllowOrigins string `default:"*"`
