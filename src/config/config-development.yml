@@ -14,7 +14,7 @@ postgres:
   host: localhost
   port: 5432
   user: postgres
-  password: password
+  password: admin
   dbName: car_sale_db
   sslMode: disable
   maxIdleConns: 15
