@@ -7,6 +7,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
+
 	"github.com/salmantaghooni/golang-car-web-api/src/config"
 	"github.com/salmantaghooni/golang-car-web-api/src/pkg/logging"
 )

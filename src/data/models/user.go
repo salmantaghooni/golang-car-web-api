@@ -9,5 +9,5 @@ type User struct {
 	Email        string `gorm:"size:100;type:string;null;unique;default:null;"`
 	Password     string `gorm:"size:100;type:string;not null;"`
 	Enabled      bool   `gorm:"default:true;"`
-	UserRoles    []UserRole
+	UserRoles    *[]UserRole
 }

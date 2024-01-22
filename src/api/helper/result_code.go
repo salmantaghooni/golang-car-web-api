@@ -1,15 +1,13 @@
 package helper
 
-type ResultCode int
-
 const (
-	Success         ResultCode = 0
-	ValidationError ResultCode = 40001
-	AuthError       ResultCode = 40101
-	ForbiddenError  ResultCode = 40301
-	NotFoundError   ResultCode = 40401
-	LimiterError    ResultCode = 42901
-	OtpLimiterError ResultCode = 42902
-	CustomRecovery  ResultCode = 50001
-	InternalError   ResultCode = 50002
+	Success         int = 0
+	ValidationError int = 40001
+	AuthError       int = 40101
+	ForbiddenError  int = 40301
+	NotFoundError   int = 40401
+	LimiterError    int = 42901
+	OtpLimiterError int = 42902
+	CustomRecovery  int = 50001
+	InternalError   int = 50002
 )

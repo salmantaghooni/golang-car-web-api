@@ -17,11 +17,11 @@ type TokenService struct {
 }
 
 type tokenDto struct {
-	UserId       string
+	UserId       int
 	FirstName    string
 	LastName     string
 	UserName     string
-	MobileNUmber string
+	MobileNumber string
 	Email        string
 	Roles        []string
 }
@@ -45,7 +45,7 @@ func (s *TokenService) GenerateToken(token *tokenDto) (*dto.TokenDetail, error) 
 	act["first_name"] = token.FirstName
 	act["last_name"] = token.LastName
 	act["username"] = token.UserName
-	act["mobile_number"] = token.MobileNUmber
+	act["mobile_number"] = token.MobileNumber
 	act["email"] = token.Email
 	act["roles"] = token.Roles
 	act["exp"] = td.AccessTokenExpireTime

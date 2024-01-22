@@ -17,6 +17,7 @@ type Config struct {
 	Logger   LoggerConfig
 	OTP      OtpConfig
 	JWT      JWTConfig
+	Password PasswordConfig
 }
 type Cors struct {
 	AllowOrigins string `default:"*"`
@@ -70,6 +71,15 @@ type JWTConfig struct {
 	RefreshSecret              string
 	AccessTokenExpireDuration  time.Duration
 	RefreshTokenExpireDuration time.Duration
+}
+
+type PasswordConfig struct {
+	IncludeChars     bool
+	IncludeDigits    bool
+	MinLength        int
+	MaxLength        int
+	IncludeUppercase bool
+	IncludeLowercase bool
 }
 
 func GetConfig() *Config {
