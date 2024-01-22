@@ -1,0 +1,27 @@
+package middlewares
+
+import (
+	"errors"
+	"net/http"
+	"time"
+
+	"github.com/gin-gonic/gin"
+	"golang.org/x/time/rate"
+
+	"github.com/salmantaghooni/golang-car-web-api/src/api/helper"
+	"github.com/salmantaghooni/golang-car-web-api/src/config"
+	"github.com/salmantaghooni/golang-car-web-api/src/pkg/limmiter"
+)
+
+func OtpLimiter(cfg *config.Config) gin.HandlerFunc {
+	var limiter = limmiter.NewIPRateLimiter(rate.Every(cfg.OTP.Limmiter*time.Second), 1)
+	return func(c *gin.Context) {
+		limiter := limiter.GetLimiter(c.Request.RemoteAddr)
+		if !limiter.Allow() {
+			c.AbortWithStatusJSON(http.StatusTooManyRequests, helper.GenerateBaseResponseWithError(nil, false, http.StatusTooManyRequests, errors.New("Not allowed")))
+			c.Abort()
+		} else {
+			c.Next()
+		}
+	}
+}

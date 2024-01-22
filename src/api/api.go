@@ -19,9 +19,9 @@ import (
 func InitServer(cfg *config.Config) {
 	r := gin.New()
 	RegisterMiddlewares(r, cfg)
-	RegisterValidator()
-	RegisterRoutes(r)
+	RegisterRoutes(r, cfg)
 	RegisterSwagger(r, cfg)
+	RegisterValidator()
 	r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
 }
 
@@ -35,18 +35,21 @@ func RegisterMiddlewares(r *gin.Engine, cfg *config.Config) {
 func RegisterValidator() {
 	val, ok := binding.Validator.Engine().(*validator.Validate)
 	if ok {
-		val.RegisterValidation("mobile", validations.IranianMobileNumberValidator, true)
+		val.RegisterValidation("mobile", validations.IranianMobileNumberValidate, true)
+
 	}
 }
 
-func RegisterRoutes(r *gin.Engine) {
+func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 	api := r.Group("/api")
 	v1 := api.Group("/v1")
 	{
 		health := v1.Group("/health")
 		test_router := v1.Group("/test")
+		users := v1.Group("/users")
 		routers.Health(health)
 		routers.TestRouter(test_router)
+		routers.User(users, cfg)
 	}
 
 	v2 := api.Group("/v2")

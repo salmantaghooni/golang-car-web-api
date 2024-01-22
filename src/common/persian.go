@@ -1,12 +1,16 @@
 package common
 
 import (
+	"log"
 	"regexp"
 )
 
-const IranianMobileNumberPattern = `^09(1[0-9]|2[0-2]|3[0-9]|9[0-9]) [0-9]{7}$`
+const iranianMobileNumberPattern = `^09(1[0-9]|3[1-9])-?[0-9]{3}-?[0-9]{4}`
 
 func IranianMobileNumberValidate(mobileNumber string) bool {
-	res, _ := regexp.MatchString(IranianMobileNumberPattern, mobileNumber)
+	res, err := regexp.MatchString(iranianMobileNumberPattern, mobileNumber)
+	if err != nil {
+		log.Print(err.Error())
+	}
 	return res
 }
