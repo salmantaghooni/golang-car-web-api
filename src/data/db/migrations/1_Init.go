@@ -80,7 +80,7 @@ func migrationTabels(database *gorm.DB) {
 	tables = addNewTable(database, userRole, tables)
 	err := database.Migrator().CreateTable(tables...)
 	if err != nil {
-		// panic("couldn't create table")
+		panic("couldn't create table")
 	}
 	logger.Info(logging.Postgres, logging.Migration, "tables created", nil)
 	createDefaultInformation(database)
