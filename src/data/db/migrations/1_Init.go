@@ -1,13 +1,14 @@
 package migrations
 
 import (
+	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
+
 	"github.com/salmantaghooni/golang-car-web-api/src/config"
-	"github.com/salmantaghooni/golang-car-web-api/src/constans"
+	"github.com/salmantaghooni/golang-car-web-api/src/constants"
 	"github.com/salmantaghooni/golang-car-web-api/src/data/db"
 	"github.com/salmantaghooni/golang-car-web-api/src/data/models"
 	"github.com/salmantaghooni/golang-car-web-api/src/pkg/logging"
-	"golang.org/x/crypto/bcrypt"
-	"gorm.io/gorm"
 )
 
 var logger = logging.NewLogger(config.GetConfig())
@@ -21,13 +22,13 @@ func Down_1() {
 }
 
 func createDefaultInformation(database *gorm.DB) {
-	adminRole := models.Role{Name: constans.AdminRoleName}
+	adminRole := models.Role{Name: constants.AdminRoleName}
 	createRoleIfNotExist(database, &adminRole)
-	defaultRole := models.Role{Name: constans.DefaultRoleName}
+	defaultRole := models.Role{Name: constants.DefaultRoleName}
 	createRoleIfNotExist(database, &defaultRole)
 
-	adminUser := models.User{FirstName: "salman", LastName: "taghooni", MobileNumber: "09133851769", UserName: constans.DefaultUserName, Email: constans.DefaultEmail}
-	psswd := constans.DefaultPassword
+	adminUser := models.User{FirstName: "salman", LastName: "taghooni", MobileNumber: "09133851769", UserName: constants.DefaultUserName, Email: constants.DefaultEmail}
+	psswd := constants.DefaultPassword
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(psswd), bcrypt.DefaultCost)
 	adminUser.Password = string(hashedPassword)
 	createAdminUserIfNotExist(database, &adminUser, adminRole.Id)

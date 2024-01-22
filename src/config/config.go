@@ -16,6 +16,7 @@ type Config struct {
 	Cors     Cors
 	Logger   LoggerConfig
 	OTP      OtpConfig
+	JWT      JWTConfig
 }
 type Cors struct {
 	AllowOrigins string `default:"*"`
@@ -62,6 +63,13 @@ type OtpConfig struct {
 	ExpireTime time.Duration
 	Digits     int
 	Limmiter   time.Duration
+}
+
+type JWTConfig struct {
+	Secret                     string
+	RefreshSecret              string
+	AccessTokenExpireDuration  time.Duration
+	RefreshTokenExpireDuration time.Duration
 }
 
 func GetConfig() *Config {

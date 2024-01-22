@@ -5,8 +5,9 @@ import (
 	"time"
 
 	"github.com/go-redis/redis"
+
 	"github.com/salmantaghooni/golang-car-web-api/src/config"
-	"github.com/salmantaghooni/golang-car-web-api/src/constans"
+	"github.com/salmantaghooni/golang-car-web-api/src/constants"
 	"github.com/salmantaghooni/golang-car-web-api/src/data/cache"
 	"github.com/salmantaghooni/golang-car-web-api/src/pkg/logging"
 	"github.com/salmantaghooni/golang-car-web-api/src/pkg/service_errors"
@@ -30,7 +31,7 @@ func NewOtpService(cfg *config.Config) *OtpService {
 }
 
 func (s *OtpService) SetOtp(mobile_number string, otp string) error {
-	key := fmt.Sprintf("%s:%s", constans.RedisOTPDefaultKey, mobile_number)
+	key := fmt.Sprintf("%s:%s", constants.RedisOTPDefaultKey, mobile_number)
 	val := &OtpDto{
 		Value: otp,
 		Used:  false,
@@ -49,7 +50,7 @@ func (s *OtpService) SetOtp(mobile_number string, otp string) error {
 }
 
 func (s *OtpService) ValidateOtp(mobile_number string, otp string) error {
-	key := fmt.Sprintf("%s:%s", constans.RedisOTPDefaultKey, mobile_number)
+	key := fmt.Sprintf("%s:%s", constants.RedisOTPDefaultKey, mobile_number)
 	res, err := cache.Get[*OtpDto](s.redisClient, key)
 	if err != nil {
 		return err
