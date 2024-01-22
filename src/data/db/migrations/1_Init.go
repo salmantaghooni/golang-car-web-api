@@ -27,7 +27,7 @@ func createDefaultInformation(database *gorm.DB) {
 	defaultRole := models.Role{Name: constants.DefaultRoleName}
 	createRoleIfNotExist(database, &defaultRole)
 
-	adminUser := models.User{FirstName: "salman", LastName: "taghooni", MobileNumber: "09133851769", UserName: constants.DefaultUserName, Email: constants.DefaultEmail}
+	adminUser := models.User{FirstName: "salman", LastName: "taghooni", MobileNumber: "09133851769", Username: constants.DefaultUserName, Email: constants.DefaultEmail}
 	psswd := constants.DefaultPassword
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(psswd), bcrypt.DefaultCost)
 	adminUser.Password = string(hashedPassword)
@@ -53,7 +53,7 @@ func createAdminUserIfNotExist(database *gorm.DB, u *models.User, roleId int) {
 	exists := 0
 	database.Model(&models.User{}).
 		Select("id").
-		Where("user_name = ?", u.UserName).First(&exists)
+		Where("user_name = ?", u.Username).First(&exists)
 	// if err != nil {
 	// 	logger.Error(logging.Postgres, logging.Select, "error in exist useradmin "+u.UserName, nil)
 	// }

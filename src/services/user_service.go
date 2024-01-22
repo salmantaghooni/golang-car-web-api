@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 
@@ -31,7 +33,7 @@ func NewUserService(cfg *config.Config) *UserService {
 // Register by username
 
 func (s *UserService) RegisterByUsername(req *dto.RegisterUserByUsernameRequest) error {
-	u := models.User{UserName: req.Username, FirstName: req.FirstName, LastName: req.LastName, Email: req.Email}
+	u := models.User{Username: req.Username, FirstName: req.FirstName, LastName: req.LastName, Email: req.Email}
 
 	exists, err := s.existsByEmail(req.Email)
 	if err != nil {
@@ -124,13 +126,13 @@ func (s *UserService) RegisterLoginByMobileNumber(req *dto.RegisterLoginByMobile
 		return nil, err
 	}
 
-	u := models.User{MobileNumber: req.MobileNumber, UserName: req.MobileNumber}
-
+	u := models.User{MobileNumber: req.MobileNumber, Username: req.MobileNumber}
+	
 	if exists {
 		var user models.User
 		err = s.database.
 			Model(&models.User{}).
-			Where("username = ?", u.UserName).
+			Where("username = ?", u.Username).
 			Preload("UserRoles", func(tx *gorm.DB) *gorm.DB {
 				return tx.Preload("Role")
 			}).
@@ -138,6 +140,8 @@ func (s *UserService) RegisterLoginByMobileNumber(req *dto.RegisterLoginByMobile
 		if err != nil {
 			return nil, err
 		}
+
+		fmt.Println(user)
 		tdto := tokenDto{UserId: user.Id, FirstName: user.FirstName, LastName: user.LastName,
 			Email: user.Email, MobileNumber: user.MobileNumber}
 
@@ -186,7 +190,7 @@ func (s *UserService) RegisterLoginByMobileNumber(req *dto.RegisterLoginByMobile
 	var user models.User
 	err = s.database.
 		Model(&models.User{}).
-		Where("username = ?", u.UserName).
+		Where("username = ?", u.Username).
 		Preload("UserRoles", func(tx *gorm.DB) *gorm.DB {
 			return tx.Preload("Role")
 		}).
