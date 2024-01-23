@@ -129,7 +129,7 @@ func (u *UsersHandler) SendOtp(ctx *gin.Context) {
 	err = u.service.SendOtp(req)
 	if err != nil {
 		errStatusCode := helper.TranslateErrorToStatusCode(err)
-		ctx.AbortWithStatusJSON(errStatusCode, helper.GenerateBaseResponseWithError(nil, false, errStatusCode, err))
+		ctx.AbortWithStatusJSON(errStatusCode, helper.GenerateBaseResponseWithError(nil, false, helper.InternalError, err))
 		return
 	}
 
