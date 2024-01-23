@@ -29,14 +29,13 @@ func RegisterMiddlewares(r *gin.Engine, cfg *config.Config) {
 	r.Use(middlewares.DefaultStracturedLogger(cfg))
 	r.Use(middlewares.LimitByRequest())
 	r.Use(middlewares.Cors(cfg))
-	r.Use(gin.Logger(), gin.Recovery())
+	r.Use(gin.Logger(), gin.CustomRecovery(middlewares.ErrorHandler))
 }
 
 func RegisterValidator() {
-	val, ok := binding.Validator.Engine().(*validator.Validate)
-	if ok {
-		val.RegisterValidation("mobile", validations.IranianMobileNumberValidate, true)
 
+	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		v.RegisterValidation("mobile", validations.IranianMobileNumberValidate)
 	}
 }
 
@@ -45,7 +44,7 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 	v1 := api.Group("/v1")
 	{
 		health := v1.Group("/health")
-		test_router := v1.Group("/test")
+		test_router := v1.Group("/test", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		users := v1.Group("/users")
 		routers.Health(health)
 		routers.TestRouter(test_router)

@@ -5,19 +5,39 @@ import "github.com/salmantaghooni/golang-car-web-api/src/api/validations"
 type BaseHttpResponse struct {
 	Result           any                            `json:"result"`
 	Success          bool                           `json:"success"`
-	ResultCode       int                            `json:"resultCode"`
+	ResultCode       ResultCode                     `json:"resultCode"`
 	ValidationErrors *[]validations.ValidationError `json:"validationErrors"`
 	Error            any                            `json:"error"`
 }
 
-func GenerateBaseResponse(result any, success bool, resultCode int) *BaseHttpResponse {
-	return &BaseHttpResponse{Result: result, Success: success, ResultCode: resultCode}
+func GenerateBaseResponse(result any, success bool, resultCode ResultCode) *BaseHttpResponse {
+	return &BaseHttpResponse{Result: result,
+		Success:    success,
+		ResultCode: resultCode,
+	}
 }
 
-func GenerateBaseResponseWithError(result any, success bool, resultCode int, err error) *BaseHttpResponse {
-	return &BaseHttpResponse{Result: result, Success: success, ResultCode: resultCode, Error: err.Error()}
+func GenerateBaseResponseWithError(result any, success bool, resultCode ResultCode, err error) *BaseHttpResponse {
+	return &BaseHttpResponse{Result: result,
+		Success:    success,
+		ResultCode: resultCode,
+		Error:      err.Error(),
+	}
+
 }
 
-func GenerateBaseResponseWithValidationError(result any, success bool, resultCode int, err error) *BaseHttpResponse {
-	return &BaseHttpResponse{Result: result, Success: success, ResultCode: resultCode, ValidationErrors: validations.GetValidationErrors(err)}
+func GenerateBaseResponseWithAnyError(result any, success bool, resultCode ResultCode, err any) *BaseHttpResponse {
+	return &BaseHttpResponse{Result: result,
+		Success:    success,
+		ResultCode: resultCode,
+		Error:      err,
+	}
+}
+
+func GenerateBaseResponseWithValidationError(result any, success bool, resultCode ResultCode, err error) *BaseHttpResponse {
+	return &BaseHttpResponse{Result: result,
+		Success:          success,
+		ResultCode:       resultCode,
+		ValidationErrors: validations.GetValidationErrors(err),
+	}
 }
