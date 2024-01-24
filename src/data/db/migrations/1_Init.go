@@ -17,8 +17,35 @@ func Up_1() {
 	database := db.GetDb()
 	migrationTabels(database)
 }
-func Down_1() {
 
+func migrationTabels(database *gorm.DB) {
+	tables := []interface{}{}
+
+	country := models.Country{}
+	city := models.City{}
+	user := models.User{}
+	role := models.Role{}
+	userRole := models.UserRole{}
+
+	tables = addNewTable(database, country, tables)
+	tables = addNewTable(database, city, tables)
+	tables = addNewTable(database, user, tables)
+	tables = addNewTable(database, role, tables)
+	tables = addNewTable(database, userRole, tables)
+	err := database.Migrator().CreateTable(tables...)
+	if err != nil {
+		panic("couldn't create table")
+	}
+	logger.Info(logging.Postgres, logging.Migration, "tables created", nil)
+	createDefaultInformation(database)
+
+}
+
+func addNewTable(database *gorm.DB, model interface{}, tables []interface{}) []interface{} {
+	if !database.Migrator().HasTable(model) {
+		tables = append(tables, model)
+	}
+	return tables
 }
 
 func createDefaultInformation(database *gorm.DB) {
@@ -64,32 +91,75 @@ func createAdminUserIfNotExist(database *gorm.DB, u *models.User, roleId int) {
 	}
 }
 
-func migrationTabels(database *gorm.DB) {
-	tables := []interface{}{}
-
-	country := models.Country{}
-	city := models.City{}
-	user := models.User{}
-	role := models.Role{}
-	userRole := models.UserRole{}
-
-	tables = addNewTable(database, country, tables)
-	tables = addNewTable(database, city, tables)
-	tables = addNewTable(database, user, tables)
-	tables = addNewTable(database, role, tables)
-	tables = addNewTable(database, userRole, tables)
-	err := database.Migrator().CreateTable(tables...)
-	if err != nil {
-		panic("couldn't create table")
+func createCountry(database *gorm.DB) {
+	count := 0
+	database.
+		Model(&models.Country{}).
+		Select("count(*)").
+		Find(&count)
+	if count == 0 {
+		database.Create(&models.Country{Name: "Iran", Cities: []models.City{
+			{Name: "Tehran"},
+			{Name: "Isfahan"},
+			{Name: "Shiraz"},
+			{Name: "Chalus"},
+			{Name: "Ahwaz"},
+		}, Companies: []models.Company{
+			{Name: "Saipa"},
+			{Name: "Iran khodro"},
+		}})
+		database.Create(&models.Country{Name: "USA", Cities: []models.City{
+			{Name: "New York"},
+			{Name: "Washington"},
+		}, Companies: []models.Company{
+			{Name: "Tesla"},
+			{Name: "Jeep"},
+		}})
+		database.Create(&models.Country{Name: "Germany", Cities: []models.City{
+			{Name: "Berlin"},
+			{Name: "Munich"},
+		}, Companies: []models.Company{
+			{Name: "Opel"},
+			{Name: "Benz"},
+		}})
+		database.Create(&models.Country{Name: "China", Cities: []models.City{
+			{Name: "Beijing"},
+			{Name: "Shanghai"},
+		}, Companies: []models.Company{
+			{Name: "Chery"},
+			{Name: "Geely"},
+		}})
+		database.Create(&models.Country{Name: "Italy", Cities: []models.City{
+			{Name: "Roma"},
+			{Name: "Turin"},
+		}, Companies: []models.Company{
+			{Name: "Ferrari"},
+			{Name: "Fiat"},
+		}})
+		database.Create(&models.Country{Name: "France", Cities: []models.City{
+			{Name: "Paris"},
+			{Name: "Lyon"},
+		}, Companies: []models.Company{
+			{Name: "Renault"},
+			{Name: "Bugatti"},
+		}})
+		database.Create(&models.Country{Name: "Japan", Cities: []models.City{
+			{Name: "Tokyo"},
+			{Name: "Kyoto"},
+		}, Companies: []models.Company{
+			{Name: "Toyota"},
+			{Name: "Honda"},
+		}})
+		database.Create(&models.Country{Name: "South Korea", Cities: []models.City{
+			{Name: "Seoul"},
+			{Name: "Ulsan"},
+		}, Companies: []models.Company{
+			{Name: "Kia"},
+			{Name: "Hyundai"},
+		}})
 	}
-	logger.Info(logging.Postgres, logging.Migration, "tables created", nil)
-	createDefaultInformation(database)
-
 }
 
-func addNewTable(database *gorm.DB, model interface{}, tables []interface{}) []interface{} {
-	if !database.Migrator().HasTable(model) {
-		tables = append(tables, model)
-	}
-	return tables
+func Down_1() {
+
 }
