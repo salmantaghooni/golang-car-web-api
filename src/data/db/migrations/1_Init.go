@@ -62,7 +62,7 @@ func migrationTabels(database *gorm.DB) {
 		panic("couldn't create table")
 	}
 	logger.Info(logging.Postgres, logging.Migration, "tables created", nil)
-	createDefaultInformation(database)
+	createDefaultUserInformation(database)
 
 }
 
