@@ -90,6 +90,5 @@ func (h *CountryHandler) GetById(c *gin.Context) {
 // @Router /v1/countries/get-by-filter [post]
 // @Security AuthBearer
 func (h *CountryHandler) GetByFilter(c *gin.Context) {
-
 	GetByFilter(c, h.service.GetByFilter)
 }
