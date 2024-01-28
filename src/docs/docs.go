@@ -15,6 +15,263 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/v1/countries/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create a country",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Countries"
+                ],
+                "summary": "Create a country",
+                "parameters": [
+                    {
+                        "description": "Create a country",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateUpdateCountryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Country response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CountryResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/countries/get-by-filter": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get Countries",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Countries"
+                ],
+                "summary": "Get Countries",
+                "parameters": [
+                    {
+                        "description": "Request",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PaginationInputWithFilter"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Country response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CountryResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/countries/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get a country",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Countries"
+                ],
+                "summary": "Get a country",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Country response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CountryResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Update a country",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Countries"
+                ],
+                "summary": "Update a country",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update a country",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateUpdateCountryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Country response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CountryResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Delete a country",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Countries"
+                ],
+                "summary": "Delete a country",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "response",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/health/": {
             "get": {
                 "description": "Health Check",
@@ -31,13 +288,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failed",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -67,7 +324,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handlers.PersonData"
+                            "$ref": "#/definitions/api_handlers.PersonData"
                         }
                     }
                 ],
@@ -75,13 +332,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failed",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -112,13 +369,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failed",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -144,7 +401,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.RegisterLoginByMobileRequest"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.RegisterLoginByMobileRequest"
                         }
                     }
                 ],
@@ -152,19 +409,19 @@ const docTemplate = `{
                     "201": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failed",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     },
                     "409": {
                         "description": "Failed",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -190,7 +447,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.LoginByUsernameRequest"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.LoginByUsernameRequest"
                         }
                     }
                 ],
@@ -198,19 +455,19 @@ const docTemplate = `{
                     "201": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failed",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     },
                     "409": {
                         "description": "Failed",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -236,7 +493,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.RegisterUserByUsernameRequest"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.RegisterUserByUsernameRequest"
                         }
                     }
                 ],
@@ -244,19 +501,19 @@ const docTemplate = `{
                     "201": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failed",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     },
                     "409": {
                         "description": "Failed",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -281,7 +538,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.GetOtpRequest"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.GetOtpRequest"
                         }
                     }
                 ],
@@ -289,19 +546,19 @@ const docTemplate = `{
                     "201": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failed",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     },
                     "409": {
                         "description": "Failed",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -309,7 +566,115 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "dto.GetOtpRequest": {
+        "api_handlers.PersonData": {
+            "type": "object",
+            "required": [
+                "first_name",
+                "last_name",
+                "mobile_number"
+            ],
+            "properties": {
+                "first_name": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 4
+                },
+                "last_name": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 4
+                },
+                "mobile_number": {
+                    "type": "string",
+                    "maxLength": 11,
+                    "minLength": 11
+                }
+            }
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.CityResponse": {
+            "type": "object",
+            "properties": {
+                "country": {
+                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CountryResponse"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.CompanyResponse": {
+            "type": "object",
+            "properties": {
+                "country": {
+                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CountryResponse"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.CountryResponse": {
+            "type": "object",
+            "properties": {
+                "cities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CityResponse"
+                    }
+                },
+                "companies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CompanyResponse"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateUpdateCountryRequest": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "minLength": 3
+                }
+            }
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.Filter": {
+            "type": "object",
+            "properties": {
+                "filterType": {
+                    "description": "text number",
+                    "type": "string"
+                },
+                "from": {
+                    "type": "string"
+                },
+                "to": {
+                    "type": "string"
+                },
+                "type": {
+                    "description": "contains notContains equals notEqual startsWith lessThan lessThanOrEqual greaterThan greaterThanOrEqual inRange endsWith",
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.GetOtpRequest": {
             "type": "object",
             "required": [
                 "mobileNumber"
@@ -322,7 +687,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.LoginByUsernameRequest": {
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.LoginByUsernameRequest": {
             "type": "object",
             "required": [
                 "password",
@@ -339,7 +704,56 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.RegisterLoginByMobileRequest": {
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CountryResponse": {
+            "type": "object",
+            "properties": {
+                "hasNextPage": {
+                    "type": "boolean"
+                },
+                "hasPreviousPage": {
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CountryResponse"
+                    }
+                },
+                "pageNumber": {
+                    "type": "integer"
+                },
+                "totalPages": {
+                    "type": "integer"
+                },
+                "totalRows": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.PaginationInputWithFilter": {
+            "type": "object",
+            "properties": {
+                "filter": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.Filter"
+                    }
+                },
+                "pageNumber": {
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "type": "integer"
+                },
+                "sort": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.Sort"
+                    }
+                }
+            }
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.RegisterLoginByMobileRequest": {
             "type": "object",
             "required": [
                 "mobileNumber",
@@ -358,7 +772,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.RegisterUserByUsernameRequest": {
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.RegisterUserByUsernameRequest": {
             "type": "object",
             "required": [
                 "firstName",
@@ -389,38 +803,24 @@ const docTemplate = `{
                 }
             }
         },
-        "handlers.PersonData": {
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.Sort": {
             "type": "object",
-            "required": [
-                "first_name",
-                "last_name",
-                "mobile_number"
-            ],
             "properties": {
-                "first_name": {
-                    "type": "string",
-                    "maxLength": 255,
-                    "minLength": 4
+                "colId": {
+                    "type": "string"
                 },
-                "last_name": {
-                    "type": "string",
-                    "maxLength": 255,
-                    "minLength": 4
-                },
-                "mobile_number": {
-                    "type": "string",
-                    "maxLength": 11,
-                    "minLength": 11
+                "sort": {
+                    "type": "string"
                 }
             }
         },
-        "helper.BaseHttpResponse": {
+        "github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse": {
             "type": "object",
             "properties": {
                 "error": {},
                 "result": {},
                 "resultCode": {
-                    "type": "integer"
+                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.ResultCode"
                 },
                 "success": {
                     "type": "boolean"
@@ -428,12 +828,37 @@ const docTemplate = `{
                 "validationErrors": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/validations.ValidationError"
+                        "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_validations.ValidationError"
                     }
                 }
             }
         },
-        "validations.ValidationError": {
+        "github_com_salmantaghooni_golang-car-web-api_src_api_helper.ResultCode": {
+            "type": "integer",
+            "enum": [
+                0,
+                40001,
+                40101,
+                40301,
+                40401,
+                42901,
+                42902,
+                50001,
+                50002
+            ],
+            "x-enum-varnames": [
+                "Success",
+                "ValidationError",
+                "AuthError",
+                "ForbiddenError",
+                "NotFoundError",
+                "LimiterError",
+                "OtpLimiterError",
+                "CustomRecovery",
+                "InternalError"
+            ]
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_validations.ValidationError": {
             "type": "object",
             "properties": {
                 "message": {

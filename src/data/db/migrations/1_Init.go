@@ -105,7 +105,7 @@ func createAdminUserIfNotExist(database *gorm.DB, u *models.User, roleId int) {
 	exists := 0
 	database.Model(&models.User{}).
 		Select("id").
-		Where("user_name = ?", u.Username).First(&exists)
+		Where("username = ?", u.Username).First(&exists)
 	// if err != nil {
 	// 	logger.Error(logging.Postgres, logging.Select, "error in exist useradmin "+u.UserName, nil)
 	// }
