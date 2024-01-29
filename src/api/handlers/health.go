@@ -26,5 +26,4 @@ func NewHealthHandler() *HealthHandler {
 // @Router /v1/health/ [get]
 func (h *HealthHandler) Health(c *gin.Context) {
 	c.JSON(http.StatusOK, helper.GenerateBaseResponse("working", true, 0))
-	return
 }

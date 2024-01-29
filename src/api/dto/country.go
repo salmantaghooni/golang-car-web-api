@@ -16,9 +16,3 @@ type CompanyResponse struct {
 	Name    string          `json:"name"`
 	Country CountryResponse `json:"country,omitempty"`
 }
-
-type CityResponse struct {
-	Id      int             `json:"id"`
-	Name    string          `json:"name"`
-	Country CountryResponse `json:"country,omitempty"`
-}

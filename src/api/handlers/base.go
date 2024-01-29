@@ -8,11 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/salmantaghooni/golang-car-web-api/src/api/helper"
-	"github.com/salmantaghooni/golang-car-web-api/src/config"
-	"github.com/salmantaghooni/golang-car-web-api/src/pkg/logging"
 )
-
-var logger = logging.NewLogger(config.GetConfig())
 
 func Create[Ti any, To any](c *gin.Context, caller func(ctx context.Context, req *Ti) (*To, error)) {
 	req := new(Ti)
