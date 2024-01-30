@@ -46,21 +46,20 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 	api := r.Group("/api")
 	v1 := api.Group("/v1")
 	{
-		health := v1.Group("/health")
-		test_router := v1.Group("/test", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		countries := v1.Group("/countries", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		cities := v1.Group("/cities", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-		files := v1.Group("/files", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 
 		// Property
 		properties := v1.Group("/properties", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		propertyCategories := v1.Group("/property-categories", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 
+		//file
+		files := v1.Group("/files", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+
+		//user
 		users := v1.Group("/users")
 
-		// Base
-		routers.Health(health)
-		routers.TestRouter(test_router)
+		
 		routers.User(users, cfg)
 		routers.Country(countries, cfg)
 		routers.City(cities, cfg)
@@ -71,11 +70,10 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		routers.PropertyCategory(propertyCategories, cfg)
 	}
 
-	v2 := api.Group("/v2")
-	{
-		health := v2.Group("/health")
-		routers.Health(health)
-	}
+	// v2 := api.Group("/v2")
+	// {
+
+	// }
 }
 func RegisterSwagger(r *gin.Engine, cfg *config.Config) {
 	docs.SwaggerInfo.Title = "golang web api"
