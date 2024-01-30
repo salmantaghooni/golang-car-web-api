@@ -10,9 +10,3 @@ type CountryResponse struct {
 	Cities    []CityResponse    `json:"cities,omitempty"`
 	Companies []CompanyResponse `json:"companies,omitempty"`
 }
-
-type CompanyResponse struct {
-	Id      int             `json:"id"`
-	Name    string          `json:"name"`
-	Country CountryResponse `json:"country,omitempty"`
-}
