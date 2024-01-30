@@ -35,7 +35,10 @@ func RegisterMiddlewares(r *gin.Engine, cfg *config.Config) {
 func RegisterValidator() {
 
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
-		v.RegisterValidation("mobile", validations.IranianMobileNumberValidate)
+		err := v.RegisterValidation("mobile", validations.IranianMobileNumberValidate)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 }
 

@@ -2,7 +2,7 @@ package middlewares
 
 import (
 	"bytes"
-	"io/ioutil"
+	"io"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -38,9 +38,9 @@ func stractureLogger(logger logging.Logger) gin.HandlerFunc {
 		path := ctx.FullPath()
 		raw := ctx.Request.URL.RawQuery
 
-		bodyBytes, _ := ioutil.ReadAll(ctx.Request.Body)
+		bodyBytes, _ := io.ReadAll(ctx.Request.Body)
 		ctx.Request.Body.Close()
-		ctx.Request.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
+		ctx.Request.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
 		ctx.Writer = blw
 		ctx.Next()
 
