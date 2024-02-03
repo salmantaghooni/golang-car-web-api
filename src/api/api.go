@@ -56,8 +56,10 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		//company
 		companies := v1.Group("/companies", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 
-		//file
+		//base
 		files := v1.Group("/files", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+		colors := v1.Group("/colors", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+		years := v1.Group("/years", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 
 		//user
 		users := v1.Group("/users")
@@ -68,18 +70,24 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		carModelCommetns := v1.Group("/car-model-comments", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		carModelProperties := v1.Group("/car-model-properties", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		carModels := v1.Group("/car-models", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+		carModelColors := v1.Group("/car-model-colors", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+		carModelYears := v1.Group("/car-model-years", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 
 		routers.CarType(carModels, cfg)
 		routers.CarType(carTypes, cfg)
 		routers.Gearbox(gearboxes, cfg)
 		routers.CarModelProperty(carModelProperties, cfg)
 		routers.CarModelComment(carModelCommetns, cfg)
+		routers.CarModelColor(carModelColors, cfg)
+		routers.CarModelYear(carModelYears, cfg)
 
 		routers.User(users, cfg)
 		routers.Country(countries, cfg)
 		routers.City(cities, cfg)
 		routers.File(files, cfg)
 		routers.Company(companies, cfg)
+		routers.Color(colors, cfg)
+		routers.Year(years, cfg)
 
 		// Property
 		routers.Property(properties, cfg)
