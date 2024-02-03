@@ -18,6 +18,103 @@ definitions:
     - last_name
     - mobile_number
     type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelColorResponse:
+    properties:
+      color:
+        $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.ColorResponse'
+      id:
+        type: integer
+    type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelCommentResponse:
+    properties:
+      carModelId:
+        type: integer
+      id:
+        type: integer
+      message:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.UserResponse'
+    type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelImageResponse:
+    properties:
+      carModelId:
+        type: integer
+      id:
+        type: integer
+      image:
+        $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.FileResponse'
+      isMainImage:
+        type: boolean
+    type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelPriceHistoryResponse:
+    properties:
+      carModelYearId:
+        type: integer
+      id:
+        type: integer
+      price:
+        type: number
+      priceAt:
+        type: string
+    type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelPropertyResponse:
+    properties:
+      carModelId:
+        type: integer
+      id:
+        type: integer
+      property:
+        $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PropertyResponse'
+      value:
+        type: string
+    type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelResponse:
+    properties:
+      carModelColors:
+        items:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelColorResponse'
+        type: array
+      carModelComments:
+        items:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelCommentResponse'
+        type: array
+      carModelImages:
+        items:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelImageResponse'
+        type: array
+      carModelProperties:
+        items:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelPropertyResponse'
+        type: array
+      carModelYears:
+        items:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelYearResponse'
+        type: array
+      carType:
+        $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarTypeResponse'
+      company:
+        $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CompanyResponse'
+      gearbox:
+        $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.GearboxResponse'
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelYearResponse:
+    properties:
+      carModelId:
+        type: integer
+      carModelPriceHistories:
+        items:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelPriceHistoryResponse'
+        type: array
+      id:
+        type: integer
+      persianYear:
+        $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PersianYearWithoutDateResponse'
+    type: object
   github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarTypeResponse:
     properties:
       id:
@@ -29,6 +126,15 @@ definitions:
     properties:
       country:
         $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CountryResponse'
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.ColorResponse:
+    properties:
+      hexCode:
+        type: string
       id:
         type: integer
       name:
@@ -57,6 +163,51 @@ definitions:
         type: integer
       name:
         type: string
+    type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarModelCommentRequest:
+    properties:
+      carModelId:
+        type: integer
+      message:
+        maxLength: 100
+        type: string
+      userId:
+        type: integer
+    required:
+    - carModelId
+    - message
+    type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarModelPropertyRequest:
+    properties:
+      carModelId:
+        type: integer
+      propertyId:
+        type: integer
+      value:
+        maxLength: 100
+        type: string
+    required:
+    - carModelId
+    - propertyId
+    - value
+    type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarModelRequest:
+    properties:
+      carTypeId:
+        type: integer
+      companyId:
+        type: integer
+      gearboxId:
+        type: integer
+      name:
+        maxLength: 15
+        minLength: 3
+        type: string
+    required:
+    - carTypeId
+    - companyId
+    - gearboxId
+    - name
     type: object
   github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarTypeRequest:
     properties:
@@ -199,6 +350,57 @@ definitions:
     required:
     - password
     - username
+    type: object
+  ? github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarModelCommentResponse
+  : properties:
+      hasNextPage:
+        type: boolean
+      hasPreviousPage:
+        type: boolean
+      items:
+        items:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelCommentResponse'
+        type: array
+      pageNumber:
+        type: integer
+      totalPages:
+        type: integer
+      totalRows:
+        type: integer
+    type: object
+  ? github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarModelPropertyResponse
+  : properties:
+      hasNextPage:
+        type: boolean
+      hasPreviousPage:
+        type: boolean
+      items:
+        items:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelPropertyResponse'
+        type: array
+      pageNumber:
+        type: integer
+      totalPages:
+        type: integer
+      totalRows:
+        type: integer
+    type: object
+  ? github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarModelResponse
+  : properties:
+      hasNextPage:
+        type: boolean
+      hasPreviousPage:
+        type: boolean
+      items:
+        items:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelResponse'
+        type: array
+      pageNumber:
+        type: integer
+      totalPages:
+        type: integer
+      totalRows:
+        type: integer
     type: object
   ? github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarTypeResponse
   : properties:
@@ -351,6 +553,15 @@ definitions:
           $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.Sort'
         type: array
     type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.PersianYearWithoutDateResponse:
+    properties:
+      id:
+        type: integer
+      persianTitle:
+        type: string
+      year:
+        type: integer
+    type: object
   github_com_salmantaghooni_golang-car-web-api_src_api_dto.PropertyCategoryResponse:
     properties:
       icon:
@@ -425,6 +636,33 @@ definitions:
       sort:
         type: string
     type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarModelCommentRequest:
+    properties:
+      message:
+        maxLength: 100
+        type: string
+    required:
+    - message
+    type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarModelPropertyRequest:
+    properties:
+      value:
+        maxLength: 100
+        type: string
+    required:
+    - value
+    type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarModelRequest:
+    properties:
+      carTypeId:
+        type: integer
+      companyId:
+        type: integer
+      gearboxId:
+        type: integer
+      name:
+        type: string
+    type: object
   github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarTypeRequest:
     properties:
       name:
@@ -492,6 +730,19 @@ definitions:
         maxLength: 15
         type: string
     type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.UserResponse:
+    properties:
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: integer
+      lastName:
+        type: string
+      username:
+        type: string
+    type: object
   github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse:
     properties:
       error: {}
@@ -556,6 +807,495 @@ definitions:
 info:
   contact: {}
 paths:
+  /v1/car-model-comments/:
+    post:
+      consumes:
+      - application/json
+      description: Create a CarModelComment
+      parameters:
+      - description: Create a CarModelComment
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarModelCommentRequest'
+      responses:
+        "201":
+          description: CarModelComment response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelCommentResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create a CarModelComment
+      tags:
+      - CarModelComments
+  /v1/car-model-comments/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a CarModelComment
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: response
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Delete a CarModelComment
+      tags:
+      - CarModelComments
+    get:
+      consumes:
+      - application/json
+      description: Get a CarModelComment
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: CarModelComment response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelCommentResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get a CarModelComment
+      tags:
+      - CarModelComments
+    put:
+      consumes:
+      - application/json
+      description: Update a CarModelComment
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update a CarModelComment
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarModelCommentRequest'
+      responses:
+        "200":
+          description: CarModelComment response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelCommentResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Update a CarModelComment
+      tags:
+      - CarModelComments
+  /v1/car-model-comments/get-by-filter:
+    post:
+      consumes:
+      - application/json
+      description: Get CarModelComments
+      parameters:
+      - description: Request
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PaginationInputWithFilter'
+      responses:
+        "200":
+          description: CarModelComment response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarModelCommentResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get CarModelComments
+      tags:
+      - CarModelComments
+  /v1/car-model-properties/:
+    post:
+      consumes:
+      - application/json
+      description: Create a CarModelProperty
+      parameters:
+      - description: Create a CarModelProperty
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarModelPropertyRequest'
+      responses:
+        "201":
+          description: CarModelProperty response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelPropertyResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create a CarModelProperty
+      tags:
+      - CarModelProperties
+  /v1/car-model-properties/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a CarModelProperty
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: response
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Delete a CarModelProperty
+      tags:
+      - CarModelProperties
+    get:
+      consumes:
+      - application/json
+      description: Get a CarModelProperty
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: CarModelProperty response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelPropertyResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get a CarModelProperty
+      tags:
+      - CarModelProperties
+    put:
+      consumes:
+      - application/json
+      description: Update a CarModelProperty
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update a CarModelProperty
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarModelPropertyRequest'
+      responses:
+        "200":
+          description: CarModelProperty response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelPropertyResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Update a CarModelProperty
+      tags:
+      - CarModelProperties
+  /v1/car-model-properties/get-by-filter:
+    post:
+      consumes:
+      - application/json
+      description: Get CarModelProperties
+      parameters:
+      - description: Request
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PaginationInputWithFilter'
+      responses:
+        "200":
+          description: CarModelProperty response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarModelPropertyResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get CarModelProperties
+      tags:
+      - CarModelProperties
+  /v1/car-models/:
+    post:
+      consumes:
+      - application/json
+      description: Create a CarModel
+      parameters:
+      - description: Create a CarModel
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarModelRequest'
+      responses:
+        "201":
+          description: CarModel response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create a CarModel
+      tags:
+      - CarModels
+  /v1/car-models/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a CarModel
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: response
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Delete a CarModel
+      tags:
+      - CarModels
+    get:
+      consumes:
+      - application/json
+      description: Get a CarModel
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: CarModel response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get a CarModel
+      tags:
+      - CarModels
+    put:
+      consumes:
+      - application/json
+      description: Update a CarModel
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update a CarModel
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarModelRequest'
+      responses:
+        "200":
+          description: CarModel response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Update a CarModel
+      tags:
+      - CarModels
+  /v1/car-models/get-by-filter:
+    post:
+      consumes:
+      - application/json
+      description: Get CarModels
+      parameters:
+      - description: Request
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PaginationInputWithFilter'
+      responses:
+        "200":
+          description: CarModel response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarModelResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get CarModels
+      tags:
+      - CarModels
   /v1/car-types/:
     post:
       consumes:

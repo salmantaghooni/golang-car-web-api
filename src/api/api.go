@@ -67,7 +67,9 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		gearboxes := v1.Group("/gearboxes", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		carModelCommetns := v1.Group("/car-model-comments", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		carModelProperties := v1.Group("/car-model-properties", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+		carModels := v1.Group("/car-models", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 
+		routers.CarType(carModels, cfg)
 		routers.CarType(carTypes, cfg)
 		routers.Gearbox(gearboxes, cfg)
 		routers.CarModelProperty(carModelProperties, cfg)
@@ -82,6 +84,7 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		// Property
 		routers.Property(properties, cfg)
 		routers.PropertyCategory(propertyCategories, cfg)
+
 	}
 
 	// v2 := api.Group("/v2")
