@@ -15,6 +15,281 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/v1/car-model-colors/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create a CarModelColor",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelColors"
+                ],
+                "summary": "Create a CarModelColor",
+                "parameters": [
+                    {
+                        "description": "Create a CarModelColor",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarModelColorRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "CarModelColor response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelColorResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/car-model-colors/get-by-filter": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get CarModelColors",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelColors"
+                ],
+                "summary": "Get CarModelColors",
+                "parameters": [
+                    {
+                        "description": "Request",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PaginationInputWithFilter"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "CarModelColor response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarModelColorResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/car-model-colors/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get a CarModelColor",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelColors"
+                ],
+                "summary": "Get a CarModelColor",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "CarModelColor response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelColorResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Update a CarModelColor",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelColors"
+                ],
+                "summary": "Update a CarModelColor",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update a CarModelColor",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarModelColorRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "CarModelColor response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelColorResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Delete a CarModelColor",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelColors"
+                ],
+                "summary": "Delete a CarModelColor",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "response",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/car-model-comments/": {
             "post": {
                 "security": [
@@ -534,6 +809,281 @@ const docTemplate = `{
                     "CarModelProperties"
                 ],
                 "summary": "Delete a CarModelProperty",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "response",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/car-model-years/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create a CarModelYear",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelYears"
+                ],
+                "summary": "Create a CarModelYear",
+                "parameters": [
+                    {
+                        "description": "Create a CarModelYear",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarModelYearRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "CarModelYear response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelYearResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/car-model-years/get-by-filter": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get CarModelYears",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelYears"
+                ],
+                "summary": "Get CarModelYears",
+                "parameters": [
+                    {
+                        "description": "Request",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PaginationInputWithFilter"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "CarModelYear response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarModelYearResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/car-model-years/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get a CarModelYear",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelYears"
+                ],
+                "summary": "Get a CarModelYear",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "CarModelYear response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelYearResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Update a CarModelYear",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelYears"
+                ],
+                "summary": "Update a CarModelYear",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update a CarModelYear",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarModelYearRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "CarModelYear response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelYearResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Delete a CarModelYear",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelYears"
+                ],
+                "summary": "Delete a CarModelYear",
                 "parameters": [
                     {
                         "type": "integer",
@@ -1359,6 +1909,281 @@ const docTemplate = `{
                     "Cities"
                 ],
                 "summary": "Delete a City",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "response",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/colors/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create a Color",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Colors"
+                ],
+                "summary": "Create a Color",
+                "parameters": [
+                    {
+                        "description": "Create a Color",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateColorRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Color response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.ColorResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/colors/get-by-filter": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get Colors",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Colors"
+                ],
+                "summary": "Get Colors",
+                "parameters": [
+                    {
+                        "description": "Request",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PaginationInputWithFilter"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Color response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_ColorResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/colors/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get a Color",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Colors"
+                ],
+                "summary": "Get a Color",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Color response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.ColorResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Update a Color",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Colors"
+                ],
+                "summary": "Update a Color",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update a Color",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateColorRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Color response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.ColorResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Delete a Color",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Colors"
+                ],
+                "summary": "Delete a Color",
                 "parameters": [
                     {
                         "type": "integer",
@@ -3299,6 +4124,281 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/v1/years/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create a PersianYear",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PersianYears"
+                ],
+                "summary": "Create a PersianYear",
+                "parameters": [
+                    {
+                        "description": "Create a PersianYear",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreatePersianYearRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "PersianYear response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PersianYearResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/years/get-by-filter": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get PersianYears",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PersianYears"
+                ],
+                "summary": "Get PersianYears",
+                "parameters": [
+                    {
+                        "description": "Request",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PaginationInputWithFilter"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "PersianYear response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_PersianYearResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/years/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get a PersianYear",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PersianYears"
+                ],
+                "summary": "Get a PersianYear",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "PersianYear response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PersianYearResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Update a PersianYear",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PersianYears"
+                ],
+                "summary": "Update a PersianYear",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update a PersianYear",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdatePersianYearRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "PersianYear response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PersianYearResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Delete a PersianYear",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PersianYears"
+                ],
+                "summary": "Delete a PersianYear",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "response",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -3552,6 +4652,21 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarModelColorRequest": {
+            "type": "object",
+            "required": [
+                "carModelId",
+                "colorId"
+            ],
+            "properties": {
+                "carModelId": {
+                    "type": "integer"
+                },
+                "colorId": {
+                    "type": "integer"
+                }
+            }
+        },
         "github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarModelCommentRequest": {
             "type": "object",
             "required": [
@@ -3616,6 +4731,21 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarModelYearRequest": {
+            "type": "object",
+            "required": [
+                "carModelId",
+                "persianYearId"
+            ],
+            "properties": {
+                "carModelId": {
+                    "type": "integer"
+                },
+                "persianYearId": {
+                    "type": "integer"
+                }
+            }
+        },
         "github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarTypeRequest": {
             "type": "object",
             "required": [
@@ -3642,6 +4772,21 @@ const docTemplate = `{
                 "name": {
                     "type": "string",
                     "maxLength": 20,
+                    "minLength": 3
+                }
+            }
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateColorRequest": {
+            "type": "object",
+            "properties": {
+                "hexCode": {
+                    "type": "string",
+                    "maxLength": 7,
+                    "minLength": 7
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 15,
                     "minLength": 3
                 }
             }
@@ -3673,6 +4818,25 @@ const docTemplate = `{
                     "type": "string",
                     "maxLength": 15,
                     "minLength": 3
+                }
+            }
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreatePersianYearRequest": {
+            "type": "object",
+            "properties": {
+                "endAt": {
+                    "type": "string"
+                },
+                "persianTitle": {
+                    "type": "string",
+                    "maxLength": 4,
+                    "minLength": 4
+                },
+                "startAt": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "integer"
                 }
             }
         },
@@ -3819,6 +4983,32 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarModelColorResponse": {
+            "type": "object",
+            "properties": {
+                "hasNextPage": {
+                    "type": "boolean"
+                },
+                "hasPreviousPage": {
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelColorResponse"
+                    }
+                },
+                "pageNumber": {
+                    "type": "integer"
+                },
+                "totalPages": {
+                    "type": "integer"
+                },
+                "totalRows": {
+                    "type": "integer"
+                }
+            }
+        },
         "github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarModelCommentResponse": {
             "type": "object",
             "properties": {
@@ -3897,6 +5087,32 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarModelYearResponse": {
+            "type": "object",
+            "properties": {
+                "hasNextPage": {
+                    "type": "boolean"
+                },
+                "hasPreviousPage": {
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelYearResponse"
+                    }
+                },
+                "pageNumber": {
+                    "type": "integer"
+                },
+                "totalPages": {
+                    "type": "integer"
+                },
+                "totalRows": {
+                    "type": "integer"
+                }
+            }
+        },
         "github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarTypeResponse": {
             "type": "object",
             "properties": {
@@ -3936,6 +5152,32 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CityResponse"
+                    }
+                },
+                "pageNumber": {
+                    "type": "integer"
+                },
+                "totalPages": {
+                    "type": "integer"
+                },
+                "totalRows": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_ColorResponse": {
+            "type": "object",
+            "properties": {
+                "hasNextPage": {
+                    "type": "boolean"
+                },
+                "hasPreviousPage": {
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.ColorResponse"
                     }
                 },
                 "pageNumber": {
@@ -4053,6 +5295,32 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_PersianYearResponse": {
+            "type": "object",
+            "properties": {
+                "hasNextPage": {
+                    "type": "boolean"
+                },
+                "hasPreviousPage": {
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PersianYearResponse"
+                    }
+                },
+                "pageNumber": {
+                    "type": "integer"
+                },
+                "totalPages": {
+                    "type": "integer"
+                },
+                "totalRows": {
+                    "type": "integer"
+                }
+            }
+        },
         "github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_PropertyCategoryResponse": {
             "type": "object",
             "properties": {
@@ -4125,6 +5393,26 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.Sort"
                     }
+                }
+            }
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.PersianYearResponse": {
+            "type": "object",
+            "properties": {
+                "endAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "persianTitle": {
+                    "type": "string"
+                },
+                "startAt": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "integer"
                 }
             }
         },
@@ -4249,6 +5537,17 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarModelColorRequest": {
+            "type": "object",
+            "properties": {
+                "carModelId": {
+                    "type": "integer"
+                },
+                "colorId": {
+                    "type": "integer"
+                }
+            }
+        },
         "github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarModelCommentRequest": {
             "type": "object",
             "required": [
@@ -4290,6 +5589,17 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarModelYearRequest": {
+            "type": "object",
+            "properties": {
+                "carModelId": {
+                    "type": "integer"
+                },
+                "persianYearId": {
+                    "type": "integer"
+                }
+            }
+        },
         "github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarTypeRequest": {
             "type": "object",
             "required": [
@@ -4312,6 +5622,21 @@ const docTemplate = `{
                 "name": {
                     "type": "string",
                     "maxLength": 20,
+                    "minLength": 3
+                }
+            }
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateColorRequest": {
+            "type": "object",
+            "properties": {
+                "hexCode": {
+                    "type": "string",
+                    "maxLength": 7,
+                    "minLength": 7
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 15,
                     "minLength": 3
                 }
             }
@@ -4347,6 +5672,25 @@ const docTemplate = `{
                     "type": "string",
                     "maxLength": 15,
                     "minLength": 3
+                }
+            }
+        },
+        "github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdatePersianYearRequest": {
+            "type": "object",
+            "properties": {
+                "endAt": {
+                    "type": "string"
+                },
+                "persianTitle": {
+                    "type": "string",
+                    "maxLength": 4,
+                    "minLength": 4
+                },
+                "startAt": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "integer"
                 }
             }
         },
