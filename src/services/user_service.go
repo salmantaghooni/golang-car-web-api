@@ -127,7 +127,7 @@ func (s *UserService) RegisterLoginByMobileNumber(req *dto.RegisterLoginByMobile
 	}
 
 	u := models.User{MobileNumber: req.MobileNumber, Username: req.MobileNumber}
-	
+
 	if exists {
 		var user models.User
 		err = s.database.

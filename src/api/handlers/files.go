@@ -44,7 +44,9 @@ func NewFileHandler(cfg *config.Config) *FileHandler {
 // @Router /v1/files/ [post]
 // @Security AuthBearer
 func (h *FileHandler) Create(c *gin.Context) {
+
 	upload := dto.UploadFileRequest{}
+
 	err := c.ShouldBind(&upload)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest,
@@ -55,6 +57,7 @@ func (h *FileHandler) Create(c *gin.Context) {
 	req.Description = upload.Description
 	req.MimeType = upload.File.Header.Get("Content-Type")
 	req.Directory = "uploads"
+
 	req.Name, err = saveUploadFile(upload.File, req.Directory)
 	if err != nil {
 		c.AbortWithStatusJSON(helper.TranslateErrorToStatusCode(err),

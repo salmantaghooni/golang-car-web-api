@@ -26,9 +26,9 @@ func InitServer(cfg *config.Config) {
 }
 
 func RegisterMiddlewares(r *gin.Engine, cfg *config.Config) {
+	r.Use(middlewares.Cors(cfg))
 	r.Use(middlewares.DefaultStracturedLogger(cfg))
 	r.Use(middlewares.LimitByRequest())
-	r.Use(middlewares.Cors(cfg))
 	r.Use(gin.Logger(), gin.CustomRecovery(middlewares.ErrorHandler))
 }
 
@@ -73,6 +73,7 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		carModelColors := v1.Group("/car-model-colors", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		carModelYears := v1.Group("/car-model-years", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		carModelPriceHistories := v1.Group("/car-model-price-histories", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+		carModelImages := v1.Group("/car-model-images", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 
 		routers.CarType(carModels, cfg)
 		routers.CarType(carTypes, cfg)
@@ -82,6 +83,7 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		routers.CarModelColor(carModelColors, cfg)
 		routers.CarModelYear(carModelYears, cfg)
 		routers.CarModelPriceHistory(carModelPriceHistories, cfg)
+		routers.CarModelImage(carModelImages, cfg)
 
 		routers.User(users, cfg)
 		routers.Country(countries, cfg)
@@ -94,7 +96,7 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		// Property
 		routers.Property(properties, cfg)
 		routers.PropertyCategory(propertyCategories, cfg)
-
+		r.Static("/static", "./uploads")
 	}
 
 	// v2 := api.Group("/v2")

@@ -187,6 +187,18 @@ definitions:
     - carModelId
     - message
     type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarModelImageRequest:
+    properties:
+      carModelId:
+        type: integer
+      imageId:
+        type: integer
+      isMainImage:
+        type: boolean
+    required:
+    - carModelId
+    - imageId
+    type: object
   github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarModelPriceHistoryRequest:
     properties:
       carModelYearId:
@@ -434,6 +446,23 @@ definitions:
       items:
         items:
           $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelCommentResponse'
+        type: array
+      pageNumber:
+        type: integer
+      totalPages:
+        type: integer
+      totalRows:
+        type: integer
+    type: object
+  ? github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarModelImageResponse
+  : properties:
+      hasNextPage:
+        type: boolean
+      hasPreviousPage:
+        type: boolean
+      items:
+        items:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelImageResponse'
         type: array
       pageNumber:
         type: integer
@@ -805,6 +834,11 @@ definitions:
         type: string
     required:
     - message
+    type: object
+  github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarModelImageRequest:
+    properties:
+      isMainImage:
+        type: boolean
     type: object
   github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarModelPriceHistoryRequest:
     properties:
@@ -1333,6 +1367,169 @@ paths:
       summary: Get CarModelComments
       tags:
       - CarModelComments
+  /v1/car-model-images/:
+    post:
+      consumes:
+      - application/json
+      description: Create a CarModelImage
+      parameters:
+      - description: Create a CarModelImage
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CreateCarModelImageRequest'
+      responses:
+        "201":
+          description: CarModelImage response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelImageResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create a CarModelImage
+      tags:
+      - CarModelImages
+  /v1/car-model-images/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a CarModelImage
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: response
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Delete a CarModelImage
+      tags:
+      - CarModelImages
+    get:
+      consumes:
+      - application/json
+      description: Get a CarModelImage
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: CarModelImage response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelImageResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get a CarModelImage
+      tags:
+      - CarModelImages
+    put:
+      consumes:
+      - application/json
+      description: Update a CarModelImage
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update a CarModelImage
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.UpdateCarModelImageRequest'
+      responses:
+        "200":
+          description: CarModelImage response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.CarModelImageResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Update a CarModelImage
+      tags:
+      - CarModelImages
+  /v1/car-model-images/get-by-filter:
+    post:
+      consumes:
+      - application/json
+      description: Get CarModelImages
+      parameters:
+      - description: Request
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PaginationInputWithFilter'
+      responses:
+        "200":
+          description: CarModelImage response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_dto.PagedList-github_com_salmantaghooni_golang-car-web-api_src_api_dto_CarModelImageResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_salmantaghooni_golang-car-web-api_src_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get CarModelImages
+      tags:
+      - CarModelImages
   /v1/car-model-price-histories/:
     post:
       consumes:

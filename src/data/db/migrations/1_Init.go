@@ -76,8 +76,7 @@ func addNewTable(database *gorm.DB, model interface{}, tables []interface{}) []i
 func createDefaultUserInformation(database *gorm.DB) {
 	adminRole := models.Role{Name: constants.AdminRoleName}
 	createRoleIfNotExist(database, &adminRole)
-	defaultRole := models.Role{Name: constants.DefaultRoleName}
-	createRoleIfNotExist(database, &defaultRole)
+
 
 	adminUser := models.User{FirstName: "salman", LastName: "taghooni", MobileNumber: "09133851769", Username: constants.DefaultUserName, Email: constants.DefaultEmail}
 	psswd := constants.DefaultPassword
