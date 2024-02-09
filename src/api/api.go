@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"golang-car-web-api/api/middlewares"
 	"golang-car-web-api/pkg/logging"
 	"golang-car-web-api/pkg/metrics"
 
@@ -13,7 +14,6 @@ import (
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
-	"github.com/salmantaghooni/golang-car-web-api/src/api/middlewares"
 	"github.com/salmantaghooni/golang-car-web-api/src/api/routers"
 	"github.com/salmantaghooni/golang-car-web-api/src/api/validations"
 	"github.com/salmantaghooni/golang-car-web-api/src/config"
@@ -33,8 +33,8 @@ func InitServer(cfg *config.Config) {
 }
 
 func RegisterMiddlewares(r *gin.Engine, cfg *config.Config) {
-	r.Use(middlewares.Cors(cfg))
 	r.Use(middlewares.Prometheus())
+	r.Use(middlewares.Cors(cfg))
 	r.Use(middlewares.DefaultStracturedLogger(cfg))
 	r.Use(middlewares.LimitByRequest())
 	r.Use(gin.Logger(), gin.CustomRecovery(middlewares.ErrorHandler))
@@ -51,7 +51,9 @@ func RegisterValidator() {
 }
 
 func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
+
 	api := r.Group("/api")
+
 	v1 := api.Group("/v1")
 	{
 		countries := v1.Group("/countries", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
@@ -105,8 +107,9 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		routers.Property(properties, cfg)
 		routers.PropertyCategory(propertyCategories, cfg)
 		r.Static("/static", "./uploads")
-		r.GET("metrics", gin.WrapH(promhttp.Handler()))
 	}
+
+	r.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	// v2 := api.Group("/v2")
 	// {
@@ -121,6 +124,7 @@ func RegisterSwagger(r *gin.Engine, cfg *config.Config) {
 	docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%s", cfg.Server.Port)
 	docs.SwaggerInfo.Schemes = []string{"http"}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
 }
 
 func RegisterPrometheus() {
