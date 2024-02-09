@@ -2,10 +2,14 @@ package api
 
 import (
 	"fmt"
+	"golang-car-web-api/pkg/logging"
+	"golang-car-web-api/pkg/metrics"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
@@ -16,8 +20,11 @@ import (
 	"github.com/salmantaghooni/golang-car-web-api/src/docs"
 )
 
+var logger = logging.NewLogger(config.GetConfig())
+
 func InitServer(cfg *config.Config) {
 	r := gin.New()
+	RegisterPrometheus()
 	RegisterMiddlewares(r, cfg)
 	RegisterRoutes(r, cfg)
 	RegisterSwagger(r, cfg)
@@ -27,6 +34,7 @@ func InitServer(cfg *config.Config) {
 
 func RegisterMiddlewares(r *gin.Engine, cfg *config.Config) {
 	r.Use(middlewares.Cors(cfg))
+	r.Use(middlewares.Prometheus())
 	r.Use(middlewares.DefaultStracturedLogger(cfg))
 	r.Use(middlewares.LimitByRequest())
 	r.Use(gin.Logger(), gin.CustomRecovery(middlewares.ErrorHandler))
@@ -97,6 +105,7 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		routers.Property(properties, cfg)
 		routers.PropertyCategory(propertyCategories, cfg)
 		r.Static("/static", "./uploads")
+		r.GET("metrics", gin.WrapH(promhttp.Handler()))
 	}
 
 	// v2 := api.Group("/v2")
@@ -112,4 +121,16 @@ func RegisterSwagger(r *gin.Engine, cfg *config.Config) {
 	docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%s", cfg.Server.Port)
 	docs.SwaggerInfo.Schemes = []string{"http"}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+}
+
+func RegisterPrometheus() {
+	err := prometheus.Register(metrics.DbCall)
+	if err != nil {
+		logger.Error(logging.Prometheus, logging.Startup, err.Error(), nil)
+	}
+
+	err = prometheus.Register(metrics.HttpDuration)
+	if err != nil {
+		logger.Error(logging.Prometheus, logging.Startup, err.Error(), nil)
+	}
 }
