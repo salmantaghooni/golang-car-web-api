@@ -2,9 +2,6 @@ package api
 
 import (
 	"fmt"
-	"golang-car-web-api/api/middlewares"
-	"golang-car-web-api/pkg/logging"
-	"golang-car-web-api/pkg/metrics"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -14,10 +11,13 @@ import (
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
+	"github.com/salmantaghooni/golang-car-web-api/src/api/middlewares"
 	"github.com/salmantaghooni/golang-car-web-api/src/api/routers"
 	"github.com/salmantaghooni/golang-car-web-api/src/api/validations"
 	"github.com/salmantaghooni/golang-car-web-api/src/config"
 	"github.com/salmantaghooni/golang-car-web-api/src/docs"
+	"github.com/salmantaghooni/golang-car-web-api/src/pkg/logging"
+	"github.com/salmantaghooni/golang-car-web-api/src/pkg/metrics"
 )
 
 var logger = logging.NewLogger(config.GetConfig())

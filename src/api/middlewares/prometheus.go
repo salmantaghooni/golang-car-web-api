@@ -1,11 +1,12 @@
 package middlewares
 
 import (
-	"golang-car-web-api/pkg/metrics"
 	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
+
+	"github.com/salmantaghooni/golang-car-web-api/src/pkg/metrics"
 )
 
 func Prometheus() gin.HandlerFunc {
